@@ -21,7 +21,6 @@ def predict(input_features):
 
 # Streamlit UI
 def main():
-    st.title('ADHD Prediction App')
     st.write('Please provide the following information to predict:')
     
     # User input for features
