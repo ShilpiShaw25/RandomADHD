@@ -45,12 +45,12 @@ def main():
     country_of_res = st.selectbox('Country of Residence', country_options)
     used_app_before = st.selectbox('Used App Before', ['No', 'Yes'])
     relation = st.selectbox('Relation', ['Self', 'Parent', 'Others', 'Health care professional', 'Relative'])
-    asd = st.selectbox('Age description', ['18 and above'])
+    asd = st.selectbox('ASD', ['No','Yes'])
     # Convert 'gender' to float (0 for Female, 1 for Male)
     gender = 1 if gender == 'Male' else 0
     jundice = 1 if jundice == 'Yes' else 0
     austim = 1 if austim == 'Yes' else 0
-    asd = 1
+    asd = 1 if asd == 'Yes' else 0
     # Convert 'ethnicity' to float
     ethnicity_mapping = {
         'White-European': 0,
