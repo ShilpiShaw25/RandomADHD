@@ -179,7 +179,9 @@ def main():
     # Make prediction
     if st.button('Predict'):
         prediction = predict(input_features)
-        if prediction[1] == 1:
+        if asd ==1:
+            prediction[0] =1
+        if prediction[0] == 1:
             st.write('<span style="font-size:40px; color:yellow;">Prediction: <b>ADHD (Yes)</b></span>', unsafe_allow_html=True)
         else:
             st.write('<span style="font-size:40px; color:yellow;">Prediction: <b>No ADHD (No)</b></span>', unsafe_allow_html=True)
