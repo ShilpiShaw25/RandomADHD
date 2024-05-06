@@ -4,7 +4,7 @@ import  pickle
 import numpy as np
 
 # Load the saved model
-with open('result_decision.pkl', 'rb') as file:
+with open('result_random.pkl', 'rb') as file:
     model = pickle.load(file)
 
 
@@ -179,7 +179,7 @@ def main():
     # Make prediction
     if st.button('Predict'):
         prediction = predict(input_features)
-        if prediction[0] == 1:
+        if prediction[1] == 1:
             st.write('<span style="font-size:40px; color:yellow;">Prediction: <b>ADHD (Yes)</b></span>', unsafe_allow_html=True)
         else:
             st.write('<span style="font-size:40px; color:yellow;">Prediction: <b>No ADHD (No)</b></span>', unsafe_allow_html=True)
