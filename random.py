@@ -4,7 +4,7 @@ import  pickle
 import numpy as np
 
 # Load the saved model
-with open('result_random.pkl', 'rb') as file:
+with open('result_decision.pkl', 'rb') as file:
     model = pickle.load(file)
 
 
