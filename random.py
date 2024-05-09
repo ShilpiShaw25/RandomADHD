@@ -44,12 +44,12 @@ def main():
     country_of_res = st.selectbox('Country of Residence', country_options)
     used_app_before = st.selectbox('Used App Before', ['No', 'Yes'])
     relation = st.selectbox('Relation', ['Self', 'Parent', 'Others', 'Health care professional', 'Relative'])
-    asd = st.selectbox('ASD', ['No','Yes'])
+    asd = st.selectbox('Age Description', ['18 and above'])
     # Convert 'gender' to float (0 for Female, 1 for Male)
     gender = 1 if gender == 'Male' else 0
     jundice = 1 if jundice == 'Yes' else 0
     austim = 1 if austim == 'Yes' else 0
-    asd = 1 if asd == 'Yes' else 0
+    asd = 1 if asd == '18 and above' else 0
     # Convert 'ethnicity' to float
     ethnicity_mapping = {
         'White-European': 0,
@@ -178,8 +178,8 @@ def main():
     # Make prediction
     if st.button('Predict'):
         prediction = predict(input_features)
-        if asd ==1:
-            prediction[0] =1
+        # if asd ==1:
+        #     prediction[0] =1
         if prediction[0] == 1:
             st.write('<span style="font-size:40px; color:yellow;">Prediction: <b>ADHD (Yes)</b></span>', unsafe_allow_html=True)
         else:
