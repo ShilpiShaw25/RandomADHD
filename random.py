@@ -49,7 +49,7 @@ def main():
     gender = 1 if gender == 'Male' else 0
     jundice = 1 if jundice == 'Yes' else 0
     austim = 1 if austim == 'Yes' else 0
-    asd = 1 if asd == '18 and above' else 0
+    asd = 0 if asd == '18 and above' else 1
     # Convert 'ethnicity' to float
     ethnicity_mapping = {
         'White-European': 0,
