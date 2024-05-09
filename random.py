@@ -171,7 +171,7 @@ def main():
         'jaundice': float(jaundice),
         'autism': float(autism),
         'country_of_res': float(country_of_res),
-        'learning_disorders': float(learn),
+        'learning_disorders': float(learning_disorders),
         'asd' : float(asd),
         'relation': float(relation)
         
