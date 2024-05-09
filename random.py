@@ -15,41 +15,44 @@ def predict(input_features):
     #input_array = preprocess_input(input_features)
     
     # Make prediction
-    input_df = pd.DataFrame(input_features, index=[0])
-    prediction = model.predict(input_df)
+    #input_df = pd.DataFrame(input_features, index=[0])
+    input_array = np.array(list(input_features.values())).reshape(1, -1)
+    input_array = input_array.astype(float)
+    prediction = model.predict(input_array)
     return prediction
 
 # Streamlit UI
 def main():
+    st.title('ADHD Prediction App')
     st.write('Please provide the following information to predict:')
     
     # User input for features
-    a1_score = st.selectbox('I often notice small sounds when others do not(A1 Score):', [0, 1])
-    a2_score = st.selectbox('I usually concentrate more on the whole picture, rather than the small details(A2 Score):', [0, 1])
-    a3_score = st.selectbox('I find it easy to do more than one thing at once(A3 Score):', [0, 1])
-    a4_score = st.selectbox('If there is an interruption, I can switch back to what I was doing very quickly(A4 Score):', [0, 1])
-    a5_score = st.selectbox('I find it easy to ‘read between the lines’ when someone is talking to me(A5 Score):', [0, 1])
-    a6_score = st.selectbox('I know how to tell if someone listening to me is getting bored(A6 Score):', [0, 1])
-    a7_score = st.selectbox('When I’m reading a story I find it difficult to work out the characters’ intentions(A7 Score):', [0, 1])
-    a8_score = st.selectbox('I like to collect information about categories of things(A8 Score):', [0, 1])
-    a9_score = st.selectbox('I find it easy to work out what someone is thinking or feeling just by looking at their face(A9 Score):', [0, 1])
-    a10_score = st.selectbox('I find it difficult to work out people’s intentions(A10 Score):', [0, 1])
+    a1_score = st.selectbox('A1 Score', [0, 1])
+    a2_score = st.selectbox('A2 Score', [0, 1])
+    a3_score = st.selectbox('A3 Score', [0, 1])
+    a4_score = st.selectbox('A4 Score', [0, 1])
+    a5_score = st.selectbox('A5 Score', [0, 1])
+    a6_score = st.selectbox('A6 Score', [0, 1])
+    a7_score = st.selectbox('A7 Score', [0, 1])
+    a8_score = st.selectbox('A8 Score', [0, 1])
+    a9_score = st.selectbox('A9 Score', [0, 1])
+    a10_score = st.selectbox('A10 Score', [0, 1])
     age = st.number_input('Age', min_value=0, max_value=120, value=30)
     gender = st.selectbox('Gender', ['Female', 'Male'])
     ethnicity_options = ['White-European', 'Latino', 'Others', 'Black', 'Asian', 'Middle Eastern ', 'Pasifika', 'South Asian', 'Hispanic', 'Turkish', 'others']
     ethnicity = st.selectbox('Ethnicity', ethnicity_options)
-    jundice = st.selectbox('Jaundice', ['Yes', 'No'])
-    austim = st.selectbox('Austim', ['Yes', 'No'])
+    jaundice = st.selectbox('Jaundice', ['Yes', 'No'])
+    autism = st.selectbox('autism', ['Yes', 'No'])
     country_options = ['United States', 'Brazil', 'Spain', 'Egypt', 'New Zealand', 'Bahamas', 'Burundi', 'Austria', 'Argentina', 'Jordan', 'Ireland', 'United Arab Emirates', 'Afghanistan', 'Lebanon', 'United Kingdom', 'South Africa', 'Italy', 'Pakistan', 'Bangladesh', 'Chile', 'France', 'China', 'Australia', 'Canada', 'Saudi Arabia', 'Netherlands', 'Romania', 'Sweden', 'Tonga', 'Oman', 'India', 'Philippines', 'Sri Lanka', 'Sierra Leone', 'Ethiopia', 'Viet Nam', 'Iran', 'Costa Rica', 'Germany', 'Mexico', 'Russia', 'Armenia', 'Iceland', 'Nicaragua', 'Hong Kong', 'Japan', 'Ukraine', 'Kazakhstan', 'AmericanSamoa', 'Uruguay', 'Serbia', 'Portugal', 'Malaysia', 'Ecuador', 'Niger', 'Belgium', 'Bolivia', 'Aruba', 'Finland', 'Turkey', 'Nepal', 'Indonesia', 'Angola', 'Azerbaijan', 'Iraq', 'Czech Republic', 'Cyprus']
     country_of_res = st.selectbox('Country of Residence', country_options)
-    used_app_before = st.selectbox('Used App Before', ['No', 'Yes'])
+    learning_disorders = st.selectbox('Learning Disorders', ['No', 'Yes'])
     relation = st.selectbox('Relation', ['Self', 'Parent', 'Others', 'Health care professional', 'Relative'])
-    asd = st.selectbox('Age Description', ['18 and above'])
+    asd = st.selectbox('Age description', ['18 and above'])
     # Convert 'gender' to float (0 for Female, 1 for Male)
     gender = 1 if gender == 'Male' else 0
-    jundice = 1 if jundice == 'Yes' else 0
-    austim = 1 if austim == 'Yes' else 0
-    asd = 0 if asd == '18 and above' else 1
+    jaundice = 1 if jaundice == 'Yes' else 0
+    autism = 1 if autism == 'Yes' else 0
+    asd = 1
     # Convert 'ethnicity' to float
     ethnicity_mapping = {
         'White-European': 0,
@@ -138,8 +141,7 @@ def main():
     }
     country_of_res = country_mapping.get(country_of_res, -1)  # If not found, default to -1
     
-    # Convert 'used_app_before' to float
-    used_app_before = 1 if used_app_before == 'Yes' else 0
+    learning_disorders = 1 if learning_disorders == 'Yes' else 0
     
     # Convert 'relation' to float
     relation_mapping = {
@@ -166,10 +168,10 @@ def main():
         'age': float(age),
         'gender': float(gender),
         'ethnicity': float(ethnicity),
-        'jundice': float(jundice),
-        'austim': float(austim),
+        'jaundice': float(jaundice),
+        'autism': float(autism),
         'country_of_res': float(country_of_res),
-        'used_app_before': float(used_app_before),
+        'learning_disorders': float(learn),
         'asd' : float(asd),
         'relation': float(relation)
         
@@ -178,12 +180,10 @@ def main():
     # Make prediction
     if st.button('Predict'):
         prediction = predict(input_features)
-
         if prediction[0] == 'YES':
             st.write('<span style="font-size:40px; color:yellow;">Prediction: <b>ADHD (Yes)</b></span>', unsafe_allow_html=True)
         else:
             st.write('<span style="font-size:40px; color:yellow;">Prediction: <b>No ADHD (No)</b></span>', unsafe_allow_html=True)
-        # st.write(prediction[0])
 
 
 if __name__ == '__main__':
